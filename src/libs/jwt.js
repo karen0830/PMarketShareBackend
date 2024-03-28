@@ -16,7 +16,7 @@ export function createAcccessToken(user) {
             payload,
             TOKEN_SECRET,
             {
-                expiresIn: "1d"
+                expiresIn: "86400000"
             }, (err, token) => {
                 if (err) reject(err)
                 resolve(token)
@@ -25,3 +25,26 @@ export function createAcccessToken(user) {
     });
 }
 
+
+export function createAcccessTokenCompany(companyid) {
+    return new Promise((resolve, reject) => {
+        // Incluye los datos del usuario en el payload del token
+        const payload = {
+            id: companyid
+            // Agrega otros campos del usuario aquí
+        };
+
+        console.log(payload);
+
+        jwt.sign(
+            payload,
+            TOKEN_SECRET,
+            {
+                expiresIn: "86400000"
+            }, (err, token) => {
+                if (err) reject(err)
+                resolve(token)
+            }
+        )
+    });
+}

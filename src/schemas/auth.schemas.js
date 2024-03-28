@@ -1,34 +1,40 @@
 import {z} from "zod";
 
 export const CompanyShema = z.object({
-    companyName: z.string({
-        required_error: 'companyName is required'
+    userNameCompany: z.string({
+        required_error: 'El nombre de usuario de la empresa es obligatorio'
     }),
-    legalEntity: z.string({
-        required_error: 'Legal entity is required'
-    }),
-    companyAddress: z.string({
-        required_error: 'company Address is required'
-    }),
-    activityDescription: z.string({
-        required_error: 'activity Description is required'
+    typeCompany: z.string({
+        required_error: 'El tipo de empresa es obligatorio'
     }),
     phoneNumber: z.number({
-        required_error: "Phone number is required"
+        required_error: "El número de teléfono es obligatorio"
     }),
     email:  z.string({
-        required_error: 'Email is required',
+        required_error: 'El correo electrónico es obligatorio',
     }).email({
-        message: 'Email is invalid',
-    }),
-    taxIdentity: z.number({
-        required_error: "tax Identity is required"
+        message: 'El correo electrónico no es válido',
     }),
     password: z.string({
-        required_error: 'Password is required',
+        required_error: 'La contraseña es obligatoria',
     }).min(8, {
-        message: 'Password must be at least 8 characteres',
-    })
+        message: 'La contraseña debe tener al menos 8 caracteres',
+    }).refine((value) => {
+        const hasUppercase = /[A-Z]/.test(value);
+        return hasUppercase 
+    }, {
+        message: 'La contraseña debe contener al menos una letra mayúscula',
+    }).refine((value) => {
+        const hasLowercase = /[a-z]/.test(value);
+        return hasLowercase
+    }, {
+        message: 'La contraseña debe contener al menos una letra minúscula'
+    }).refine((value) => {
+        const hasSpecialCharacters = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(value);
+        return hasSpecialCharacters
+    }, {
+       message: 'La contraseña debe contener caracteres especiales' 
+    }),
 })
 
 export const registerSchema = z.object({
@@ -79,12 +85,8 @@ export const loginSchema = z.object({
 export const loginCompanyShema = z.object({
     email: z.string({
         required_error: "Email is required",
-    }).email({
-        message: "Invalid email",
     }),
     password: z.string({
         required_error: 'Password is required',
-    }).min(8, {
-        message: 'Password must be at least 8 characteres',
     })
 })

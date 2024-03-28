@@ -5,57 +5,64 @@ import {
     registerUser,
     logoutUser,
     profileUser,
-    registerCompany,
-    loginCompany,
-    profileCompany,
-    logoutCompany,
     imageProfile,
     verifyToken,
-    addStories,
-    archivedStories,
-    addPublications,
     reactionLove,
     deleteStories,
     comments,
     deleteComment,
     refreshToken,
-    getPublications,
     getProfileImage,
+    getProfile,
     getAllPublications,
-    pubicationsVisit
+    postMessage,
+    getMessage,
+    getPublications,
+    sharePublications,
+    getSharePublications,
+    addShopCart,
+    deleteCart,
+    getAllShoppingCarts,
+    decrementQuantityCart,
+    getTokenSocialNetwork,
+    commentsProducts,
+    getReviews,
+    DeleteReview
 } from "../controllers/auth.controller.js";
 import {
-    authRequired,
-    authRequiredCompany,
+    authRequired
 } from "../middlewares/validateToken.js";
 import { validateSchema } from "../middlewares/validator.js";
 import {
     registerSchema,
-    loginSchema,
-    CompanyShema,
-    loginCompanyShema,
+    loginSchema
 } from "../schemas/auth.schemas.js";
 
-router.post("/registerCompany", validateSchema(CompanyShema), registerCompany);
+router.post("/msg", postMessage);
 router.post("/registerUser", validateSchema(registerSchema), registerUser);
-router.post("/loginCompany", validateSchema(loginCompanyShema), loginCompany);
 router.post("/loginUser", validateSchema(loginSchema), loginUser);
-router.post("/logoutUser", logoutUser);
-router.post("/logoutCompany", logoutCompany);
-router.post("/publications", addPublications);
+router.post("/logoutUser", authRequired, logoutUser);
 router.post("/reactionLike", reactionLove);
 router.post("/imageProfile", imageProfile);
-router.post("/addStories", addStories);
-router.post("/comment", comments);
+router.post("/comment",authRequired, comments);
 router.post("/refreshToken", refreshToken);
-router.post("/publicationsVisit", pubicationsVisit);
+router.post("/sharePublication", authRequired, sharePublications);
+router.post("/addShoppingCart", authRequired, addShopCart)
+router.post("/getTokenSocialNetwork", getTokenSocialNetwork);
+router.post("/commentProduct", authRequired, commentsProducts);
+router.post("/getReviews", authRequired, getReviews);
+router.post("/deleteReview", authRequired, DeleteReview);
 router.get("/profileUser", authRequired, profileUser);
-router.get("/profileCompany", authRequiredCompany, profileCompany);
-router.get("/verify", verifyToken);
-router.get("/getPublications", getPublications);
+router.get("/verify", authRequired, verifyToken);
+router.get("/getSharePublications", authRequired, getSharePublications);
 router.get("/getProfileImage", getProfileImage);
 router.get("/getAllPublications", getAllPublications);
-router.put("/archivedStory", archivedStories);
+router.get("/getPublications", authRequired, getPublications)
+router.get("/getMessages", getMessage)
+router.get("/getAllShoppingCarts", authRequired, getAllShoppingCarts)
+router.post("/getProfile", getProfile);
 router.put("/deleteStories", deleteStories);
-router.delete("/deleteComment", deleteComment);
+router.put("/decrementQuantityCart", authRequired, decrementQuantityCart)
+router.post("/deleteComment",authRequired, deleteComment);
+router.post("/deleteShoppingCart", authRequired, deleteCart);
 export default router;

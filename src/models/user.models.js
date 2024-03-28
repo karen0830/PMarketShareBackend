@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema({
         required: true,
         trim: true,
     },
-    password:{
+    password: {
         type: String,
         required: true,
     },
@@ -31,13 +31,29 @@ const userSchema = new mongoose.Schema({
         type: [mongoose.Schema.Types.Mixed], // Un array de objetos genéricos
         default: []
     },
-    publications: {
+    shares: {
         type: [mongoose.Schema.Types.Mixed], // Un array de objetos genéricos
         default: []
     },
-    publicationsVisits: {
+    products: {
         type: [mongoose.Schema.Types.Mixed], // Un array de objetos genéricos
         default: []
+    },
+    followers: {
+        type: [mongoose.Schema.Types.Mixed], // Un array de objetos genéricos
+        default: []
+    },
+    hashedID: {
+        type: String
+    },
+    messages: {
+        type: [mongoose.Schema.Types.Mixed],
+        default: []
+    },
+    token: {
+        type: [mongoose.Schema.Types.Mixed], // Puedes usar String para almacenar la URL de la imagen
+        required: true,
+        trim: true
     }
 }, {
     timestamps: true
